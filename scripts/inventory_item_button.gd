@@ -1,4 +1,4 @@
-class_name ConstructibleDisplay
+class_name InventoryItemButton
 extends Button
 
 var photo_stage : PhotoStage
@@ -23,6 +23,5 @@ func _texture_baked(image : Image):
 	ui_texture.texture = ImageTexture.create_from_image(image)
 	remove_child(photo_stage)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func _on_button_up():
+	print("Button pressed!")

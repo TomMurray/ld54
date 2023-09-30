@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dhbg6kha8j7ca"]
+
+[ext_resource type="Script" path="res://scripts/inventory_display.gd" id="1_n2iox"]
+
+[node name="inventory_display" type="HBoxContainer"]
+mouse_filter = 0
+script = ExtResource("1_n2iox")

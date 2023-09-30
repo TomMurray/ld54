@@ -1,7 +1,7 @@
 class_name InventoryDisplay
 extends Control
 
-const item_display : PackedScene = preload("res://scripts/constructible_display.tscn")
+const item_display : PackedScene = preload("res://scenes/inventory_item_button.tscn")
 
 func set_contents(contents : Array[LevelResourceDef]):
 	# Clear all children, just in-case

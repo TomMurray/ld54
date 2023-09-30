@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dxwnjl3qqc8b" path="res://scenes/constructibles/school.tscn" id="3_aaft4"]
 [ext_resource type="Script" path="res://scripts/player_controller.gd" id="6_fk0ol"]
 [ext_resource type="Script" path="res://scripts/builder.gd" id="7_x7214"]
-[ext_resource type="Script" path="res://scripts/inventory_display.gd" id="8_et3s0"]
+[ext_resource type="PackedScene" uid="uid://dhbg6kha8j7ca" path="res://scenes/inventory_display.tscn" id="8_qw07l"]
 
 [sub_resource type="Resource" id="Resource_yhi3t"]
 script = ExtResource("2_imjbt")
@@ -70,11 +70,10 @@ emission_energy_multiplier = 9.22
 
 [node name="test_level" type="Node3D"]
 
-[node name="level" type="Node3D" parent="." node_paths=PackedStringArray("bounds", "res_display")]
+[node name="level" type="Node3D" parent="." node_paths=PackedStringArray("bounds")]
 script = ExtResource("1_mxfe0")
 bounds = NodePath("bounds")
 level_res = Array[ExtResource("2_imjbt")]([SubResource("Resource_yhi3t"), SubResource("Resource_c2uhj"), SubResource("Resource_o5dmf")])
-res_display = NodePath("../CanvasLayer/MarginContainer/PanelContainer/inventory_display")
 
 [node name="apartment_block" parent="level" instance=ExtResource("1_6wnr6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 1.5)
@@ -127,7 +126,7 @@ shadow_enabled = true
 shadow_blur = 2.951
 
 [node name="TestMarker" type="CSGSphere3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 2.43364, 1.22906)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 1.60257, 1.91319)
 visible = false
 material_override = SubResource("StandardMaterial3D_20env")
 
@@ -152,7 +151,5 @@ theme_override_constants/margin_right = 200
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/MarginContainer"]
 layout_mode = 2
 
-[node name="inventory_display" type="HBoxContainer" parent="CanvasLayer/MarginContainer/PanelContainer"]
+[node name="inventory_display" parent="CanvasLayer/MarginContainer/PanelContainer" instance=ExtResource("8_qw07l")]
 layout_mode = 2
-mouse_filter = 0
-script = ExtResource("8_et3s0")

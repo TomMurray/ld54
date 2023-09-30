@@ -1,17 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://cqj5t7272dhud"]
+[gd_scene load_steps=3 format=3 uid="uid://beft6ukio4xfd"]
 
-[ext_resource type="Script" path="res://scripts/constructible_display.gd" id="1_aebd0"]
+[ext_resource type="Script" path="res://scripts/inventory_item_button.gd" id="1_4spb8"]
 
 [sub_resource type="ImageTexture" id="ImageTexture_q8a0u"]
 
-[node name="constructible_button" type="Button"]
+[node name="inventory_item_button" type="Button"]
 custom_minimum_size = Vector2(128, 0)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_aebd0")
+script = ExtResource("1_4spb8")
 
 [node name="render" type="TextureRect" parent="."]
 custom_minimum_size = Vector2(128, 128)
@@ -24,3 +24,5 @@ texture = SubResource("ImageTexture_q8a0u")
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
+
+[connection signal="button_up" from="." to="." method="_on_button_up"]
