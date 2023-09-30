@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cp481581qrtel"]
+[gd_scene load_steps=15 format=3 uid="uid://cp481581qrtel"]
 
 [ext_resource type="PackedScene" uid="uid://dmk4fy0npeb6m" path="res://scenes/constructibles/apartment_block.tscn" id="1_6wnr6"]
 [ext_resource type="Script" path="res://scripts/level.gd" id="1_mxfe0"]
@@ -30,6 +30,28 @@ size = Vector3(5, 0.2, 5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rbj3x"]
 size = Vector3(5, 5, 5)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_61nh3"]
+sky_top_color = Color(0.580392, 0.341176, 0.619608, 1)
+sky_horizon_color = Color(0.886275, 0.745098, 0.639216, 1)
+ground_bottom_color = Color(0.180392, 0.184314, 0.027451, 1)
+
+[sub_resource type="Sky" id="Sky_t7ih1"]
+sky_material = SubResource("ProceduralSkyMaterial_61nh3")
+
+[sub_resource type="Environment" id="Environment_d72js"]
+background_mode = 2
+sky = SubResource("Sky_t7ih1")
+ambient_light_color = Color(0.768627, 0.47451, 0.698039, 1)
+ambient_light_energy = 10.09
+tonemap_mode = 2
+sdfgi_enabled = true
+glow_enabled = true
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.01
+volumetric_fog_emission = Color(1, 1, 1, 1)
+volumetric_fog_length = 29.58
+volumetric_fog_detail_spread = 4.75683
 
 [node name="test_level" type="Node3D"]
 
@@ -63,9 +85,22 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00195074, 1.51002, 0.010624
 shape = SubResource("BoxShape3D_rbj3x")
 
 [node name="player_controller" type="Node3D" parent="."]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 0, 0, 0)
 script = ExtResource("6_fk0ol")
 
 [node name="Camera3D" type="Camera3D" parent="player_controller"]
-transform = Transform3D(-1, 6.18173e-08, -6.18172e-08, 0, 0.707107, 0.707107, 8.74228e-08, 0.707107, -0.707107, 0, 5, -5)
+transform = Transform3D(-1, 4.11404e-08, -7.71376e-08, 0, 0.882352, 0.470591, 8.74228e-08, 0.470591, -0.882352, 0, 8, -14.9999)
 current = true
 fov = 60.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_d72js")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, -0.413628, -0.573509, 0, -0.811064, 0.584958, -0.707107, -0.413628, -0.573509, 0, 3, -6)
+light_color = Color(1, 0.85098, 0.505882, 1)
+light_energy = 3.081
+light_indirect_energy = 2.561
+light_volumetric_fog_energy = 1.26
+shadow_enabled = true
+shadow_blur = 2.951
