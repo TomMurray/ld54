@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cp481581qrtel"]
+[gd_scene load_steps=16 format=3 uid="uid://cp481581qrtel"]
 
 [ext_resource type="PackedScene" uid="uid://dmk4fy0npeb6m" path="res://scenes/constructibles/apartment_block.tscn" id="1_6wnr6"]
 [ext_resource type="Script" path="res://scripts/level.gd" id="1_mxfe0"]
@@ -45,13 +45,26 @@ sky = SubResource("Sky_t7ih1")
 ambient_light_color = Color(0.768627, 0.47451, 0.698039, 1)
 ambient_light_energy = 10.09
 tonemap_mode = 2
-sdfgi_enabled = true
+ssao_enabled = true
+ssao_radius = 1.4
+ssao_intensity = 1.86
+ssao_power = 2.70375
+ssil_enabled = true
+ssil_radius = 0.01
+sdfgi_use_occlusion = true
+sdfgi_cascades = 7
+sdfgi_max_distance = 1638.4
 glow_enabled = true
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.01
 volumetric_fog_emission = Color(1, 1, 1, 1)
 volumetric_fog_length = 29.58
 volumetric_fog_detail_spread = 4.75683
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_20env"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 9.22
 
 [node name="test_level" type="Node3D"]
 
@@ -84,14 +97,19 @@ shape = SubResource("BoxShape3D_vv16r")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00195074, 1.51002, 0.0106244)
 shape = SubResource("BoxShape3D_rbj3x")
 
-[node name="player_controller" type="Node3D" parent="."]
+[node name="player_controller" type="Node3D" parent="." node_paths=PackedStringArray("marker")]
 transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 0, 0, 0)
 script = ExtResource("6_fk0ol")
+marker = NodePath("../TestMarker")
 
 [node name="Camera3D" type="Camera3D" parent="player_controller"]
 transform = Transform3D(-1, 4.11404e-08, -7.71376e-08, 0, 0.882352, 0.470591, 8.74228e-08, 0.470591, -0.882352, 0, 8, -14.9999)
 current = true
 fov = 60.0
+
+[node name="RayCast3D" type="RayCast3D" parent="player_controller"]
+transform = Transform3D(0.707107, -2.10734e-08, 0.707107, 0, 1, 0, -0.707107, -2.10734e-08, 0.707107, -3.45366, 2.56475, -3.45366)
+target_position = Vector3(0, 0, 0)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_d72js")
@@ -104,3 +122,12 @@ light_indirect_energy = 2.561
 light_volumetric_fog_energy = 1.26
 shadow_enabled = true
 shadow_blur = 2.951
+
+[node name="TestMarker" type="CSGSphere3D" parent="."]
+visible = false
+material_override = SubResource("StandardMaterial3D_20env")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="TestMarker"]
+light_energy = 7.202
+shadow_enabled = true
+omni_range = 7.0

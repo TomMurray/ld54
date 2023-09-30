@@ -8,7 +8,9 @@ extends Node3D
 @export var max_zoom : float = 0.2
 @export var min_zoom : float = 2.0
 @export var zoom_step : float = 0.1
+@export var marker : Node3D
 @onready var cam : Camera3D = $Camera3D
+@onready var raycast : RayCast3D = $RayCast3D
 @onready var cam_offset_original : Vector3 = cam.position
 var zoom : float = 0.5
 
@@ -35,11 +37,21 @@ func _input(event):
 	elif event is InputEventMouseMotion:
 		var moved = (event as InputEventMouseMotion).relative
 		if Input.is_action_pressed("rotate_drag"):
-			var rotation = (moved.x / get_viewport().get_visible_rect().size.x) * rotate_drag_deg
-			rotate(Vector3.UP, deg_to_rad(rotation))
+			var rotate_deg = (moved.x / get_viewport().get_visible_rect().size.x) * rotate_drag_deg
+			_rotate_camera_deg(rotate_deg)
 		if Input.is_action_pressed("move_drag"):
 			var delta_pos = (-moved / get_viewport().get_visible_rect().size) * move_speed_drag
 			_move_in_facing_direction(Vector3(delta_pos.x, 0.0, delta_pos.y))
+
+func _physics_process(delta):
+	var mouse_pos = get_viewport().get_mouse_position()
+	var space_state = get_world_3d().direct_space_state
+	var query = PhysicsRayQueryParameters3D.create(cam.project_ray_origin(mouse_pos), cam.project_ray_normal(mouse_pos) * 1000.0)
+	var result = space_state.intersect_ray(query)
+	marker.visible = not result.is_empty()
+	if not result.is_empty():
+		# Update marker position
+		marker.position = result.position
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
