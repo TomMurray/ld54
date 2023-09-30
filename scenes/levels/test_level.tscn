@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bdoi88vqtrout" path="res://scenes/constructibles/house_small.tscn" id="2_qea0p"]
 [ext_resource type="PackedScene" uid="uid://dxwnjl3qqc8b" path="res://scenes/constructibles/school.tscn" id="3_aaft4"]
 [ext_resource type="Script" path="res://scripts/player_controller.gd" id="6_fk0ol"]
-[ext_resource type="Script" path="res://scripts/builder.gd" id="7_x7214"]
+[ext_resource type="PackedScene" uid="uid://bixwmifpxmo03" path="res://scenes/builder.tscn" id="7_tmddd"]
 [ext_resource type="PackedScene" uid="uid://dhbg6kha8j7ca" path="res://scenes/inventory_display.tscn" id="8_qw07l"]
 
 [sub_resource type="Resource" id="Resource_yhi3t"]
@@ -70,10 +70,11 @@ emission_energy_multiplier = 9.22
 
 [node name="test_level" type="Node3D"]
 
-[node name="level" type="Node3D" parent="." node_paths=PackedStringArray("bounds")]
+[node name="level" type="Node3D" parent="." node_paths=PackedStringArray("bounds", "res_display")]
 script = ExtResource("1_mxfe0")
 bounds = NodePath("bounds")
 level_res = Array[ExtResource("2_imjbt")]([SubResource("Resource_yhi3t"), SubResource("Resource_c2uhj"), SubResource("Resource_o5dmf")])
+res_display = NodePath("../CanvasLayer/MarginContainer/PanelContainer/inventory_display")
 
 [node name="apartment_block" parent="level" instance=ExtResource("1_6wnr6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 1.5)
@@ -99,19 +100,15 @@ shape = SubResource("BoxShape3D_vv16r")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00195074, 1.51002, 0.0106244)
 shape = SubResource("BoxShape3D_rbj3x")
 
-[node name="player_controller" type="Node3D" parent="." node_paths=PackedStringArray("marker")]
+[node name="player_controller" type="Node3D" parent="." node_paths=PackedStringArray("builder")]
 transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 0, 0, 0)
 script = ExtResource("6_fk0ol")
-marker = NodePath("../TestMarker")
+builder = NodePath("../builder")
 
 [node name="Camera3D" type="Camera3D" parent="player_controller"]
 transform = Transform3D(-1, 4.11403e-08, -7.71377e-08, 0, 0.882352, 0.470591, 8.74228e-08, 0.470591, -0.882352, 0, 8, -14.9999)
 current = true
 fov = 60.0
-
-[node name="builder" type="Node3D" parent="." node_paths=PackedStringArray("level")]
-script = ExtResource("7_x7214")
-level = NodePath("../level")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_d72js")
@@ -125,8 +122,11 @@ light_volumetric_fog_energy = 1.26
 shadow_enabled = true
 shadow_blur = 2.951
 
+[node name="builder" parent="." node_paths=PackedStringArray("level") instance=ExtResource("7_tmddd")]
+level = NodePath("../level")
+
 [node name="TestMarker" type="CSGSphere3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 1.60257, 1.91319)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.10586, 0.678907, 0.499999)
 visible = false
 material_override = SubResource("StandardMaterial3D_20env")
 

@@ -1,4 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://dxwnjl3qqc8b"]
+[gd_scene load_steps=6 format=3 uid="uid://dxwnjl3qqc8b"]
+
+[ext_resource type="Script" path="res://scripts/constructible.gd" id="1_202ya"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l0313"]
 albedo_color = Color(0.847059, 0.631373, 0.72549, 1)
@@ -12,7 +14,9 @@ size = Vector3(3, 1, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_kqopa"]
 size = Vector3(1, 1, 3)
 
-[node name="school" type="Node3D"]
+[node name="school" type="Node3D" node_paths=PackedStringArray("collision_object")]
+script = ExtResource("1_202ya")
+collision_object = NodePath("placement_offset/StaticBody3D")
 
 [node name="placement_offset" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.5, -1)
