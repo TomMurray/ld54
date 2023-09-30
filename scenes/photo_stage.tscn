@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://kys43oqcv5sf"]
+
+[ext_resource type="Script" path="res://scripts/photo_stage.gd" id="1_64q15"]
+
+[node name="photo_stage" type="Node3D" node_paths=PackedStringArray("viewport", "spawn_anchor")]
+script = ExtResource("1_64q15")
+viewport = NodePath("SubViewport")
+spawn_anchor = NodePath("SubViewport/spawn_anchor")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+own_world_3d = true
+transparent_bg = true
+msaa_3d = 3
+size = Vector2i(128, 128)
+render_target_update_mode = 1
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewport"]
+transform = Transform3D(0.866025, -0.353553, 0.353553, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 10, 8, 0)
+
+[node name="camera" type="Node3D" parent="SubViewport"]
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport/camera"]
+transform = Transform3D(0.866025, 0.286788, -0.409576, 0, 0.819152, 0.573576, 0.5, -0.496732, 0.709406, -5, 8, 8)
+fov = 30.8
+size = 7.0
+
+[node name="spawn_anchor" type="Node3D" parent="SubViewport"]

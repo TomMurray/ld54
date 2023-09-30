@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cp481581qrtel"]
+[gd_scene load_steps=18 format=3 uid="uid://cp481581qrtel"]
 
 [ext_resource type="PackedScene" uid="uid://dmk4fy0npeb6m" path="res://scenes/constructibles/apartment_block.tscn" id="1_6wnr6"]
 [ext_resource type="Script" path="res://scripts/level.gd" id="1_mxfe0"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://bdoi88vqtrout" path="res://scenes/constructibles/house_small.tscn" id="2_qea0p"]
 [ext_resource type="PackedScene" uid="uid://dxwnjl3qqc8b" path="res://scenes/constructibles/school.tscn" id="3_aaft4"]
 [ext_resource type="Script" path="res://scripts/player_controller.gd" id="6_fk0ol"]
+[ext_resource type="Script" path="res://scripts/builder.gd" id="7_x7214"]
+[ext_resource type="Script" path="res://scripts/inventory_display.gd" id="8_et3s0"]
 
 [sub_resource type="Resource" id="Resource_yhi3t"]
 script = ExtResource("2_imjbt")
@@ -68,32 +70,33 @@ emission_energy_multiplier = 9.22
 
 [node name="test_level" type="Node3D"]
 
-[node name="base" type="Node3D" parent="." node_paths=PackedStringArray("bounds")]
+[node name="level" type="Node3D" parent="." node_paths=PackedStringArray("bounds", "res_display")]
 script = ExtResource("1_mxfe0")
 bounds = NodePath("bounds")
 level_res = Array[ExtResource("2_imjbt")]([SubResource("Resource_yhi3t"), SubResource("Resource_c2uhj"), SubResource("Resource_o5dmf")])
+res_display = NodePath("../CanvasLayer/MarginContainer/PanelContainer/inventory_display")
 
-[node name="apartment_block" parent="base" instance=ExtResource("1_6wnr6")]
+[node name="apartment_block" parent="level" instance=ExtResource("1_6wnr6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 1.5)
 
-[node name="house_small" parent="base" instance=ExtResource("2_qea0p")]
+[node name="house_small" parent="level" instance=ExtResource("2_qea0p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
 
-[node name="school" parent="base" instance=ExtResource("3_aaft4")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2, 0, -2)
+[node name="school" parent="level" instance=ExtResource("3_aaft4")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1, 0, -1)
 
-[node name="floor" type="CSGBox3D" parent="base"]
+[node name="floor" type="CSGBox3D" parent="level"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
 size = Vector3(5, 0.2, 5)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="base/floor"]
+[node name="StaticBody3D" type="StaticBody3D" parent="level/floor"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="base/floor/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="level/floor/StaticBody3D"]
 shape = SubResource("BoxShape3D_vv16r")
 
-[node name="bounds" type="Area3D" parent="base"]
+[node name="bounds" type="Area3D" parent="level"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="base/bounds"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="level/bounds"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00195074, 1.51002, 0.0106244)
 shape = SubResource("BoxShape3D_rbj3x")
 
@@ -103,13 +106,13 @@ script = ExtResource("6_fk0ol")
 marker = NodePath("../TestMarker")
 
 [node name="Camera3D" type="Camera3D" parent="player_controller"]
-transform = Transform3D(-1, 4.11404e-08, -7.71376e-08, 0, 0.882352, 0.470591, 8.74228e-08, 0.470591, -0.882352, 0, 8, -14.9999)
+transform = Transform3D(-1, 4.11403e-08, -7.71377e-08, 0, 0.882352, 0.470591, 8.74228e-08, 0.470591, -0.882352, 0, 8, -14.9999)
 current = true
 fov = 60.0
 
-[node name="RayCast3D" type="RayCast3D" parent="player_controller"]
-transform = Transform3D(0.707107, -2.10734e-08, 0.707107, 0, 1, 0, -0.707107, -2.10734e-08, 0.707107, -3.45366, 2.56475, -3.45366)
-target_position = Vector3(0, 0, 0)
+[node name="builder" type="Node3D" parent="." node_paths=PackedStringArray("level")]
+script = ExtResource("7_x7214")
+level = NodePath("../level")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_d72js")
@@ -124,6 +127,7 @@ shadow_enabled = true
 shadow_blur = 2.951
 
 [node name="TestMarker" type="CSGSphere3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 2.43364, 1.22906)
 visible = false
 material_override = SubResource("StandardMaterial3D_20env")
 
@@ -131,3 +135,24 @@ material_override = SubResource("StandardMaterial3D_20env")
 light_energy = 7.202
 shadow_enabled = true
 omni_range = 7.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+custom_minimum_size = Vector2(0, 128)
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 200
+theme_override_constants/margin_right = 200
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+
+[node name="inventory_display" type="HBoxContainer" parent="CanvasLayer/MarginContainer/PanelContainer"]
+layout_mode = 2
+mouse_filter = 0
+script = ExtResource("8_et3s0")

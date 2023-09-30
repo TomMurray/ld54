@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://cqj5t7272dhud"]
+
+[ext_resource type="Script" path="res://scripts/constructible_display.gd" id="1_aebd0"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_q8a0u"]
+
+[node name="constructible_button" type="Button"]
+custom_minimum_size = Vector2(128, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_aebd0")
+
+[node name="render" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = SubResource("ImageTexture_q8a0u")
+
+[node name="lbl_remaining" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
