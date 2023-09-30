@@ -1,20 +1,70 @@
-[gd_scene load_steps=4 format=3 uid="uid://cp481581qrtel"]
+[gd_scene load_steps=12 format=3 uid="uid://cp481581qrtel"]
 
 [ext_resource type="PackedScene" uid="uid://dmk4fy0npeb6m" path="res://scenes/constructibles/apartment_block.tscn" id="1_6wnr6"]
+[ext_resource type="Script" path="res://scripts/level.gd" id="1_mxfe0"]
+[ext_resource type="Script" path="res://scripts/level_resource_def.gd" id="2_imjbt"]
 [ext_resource type="PackedScene" uid="uid://bdoi88vqtrout" path="res://scenes/constructibles/house_small.tscn" id="2_qea0p"]
 [ext_resource type="PackedScene" uid="uid://dxwnjl3qqc8b" path="res://scenes/constructibles/school.tscn" id="3_aaft4"]
+[ext_resource type="Script" path="res://scripts/player_controller.gd" id="6_fk0ol"]
+
+[sub_resource type="Resource" id="Resource_yhi3t"]
+script = ExtResource("2_imjbt")
+required_count = 1
+available_count = 1
+constructible = ExtResource("1_6wnr6")
+
+[sub_resource type="Resource" id="Resource_c2uhj"]
+script = ExtResource("2_imjbt")
+required_count = 3
+available_count = 3
+constructible = ExtResource("2_qea0p")
+
+[sub_resource type="Resource" id="Resource_o5dmf"]
+script = ExtResource("2_imjbt")
+required_count = 2
+available_count = 2
+constructible = ExtResource("3_aaft4")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vv16r"]
+size = Vector3(5, 0.2, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rbj3x"]
+size = Vector3(5, 5, 5)
 
 [node name="test_level" type="Node3D"]
 
-[node name="apartment_block" parent="." instance=ExtResource("1_6wnr6")]
+[node name="base" type="Node3D" parent="." node_paths=PackedStringArray("bounds")]
+script = ExtResource("1_mxfe0")
+bounds = NodePath("bounds")
+level_res = Array[ExtResource("2_imjbt")]([SubResource("Resource_yhi3t"), SubResource("Resource_c2uhj"), SubResource("Resource_o5dmf")])
+
+[node name="apartment_block" parent="base" instance=ExtResource("1_6wnr6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 1.5)
 
-[node name="house_small" parent="." instance=ExtResource("2_qea0p")]
+[node name="house_small" parent="base" instance=ExtResource("2_qea0p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
 
-[node name="school" parent="." instance=ExtResource("3_aaft4")]
+[node name="school" parent="base" instance=ExtResource("3_aaft4")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2, 0, -2)
 
-[node name="CSGBox3D" type="CSGBox3D" parent="."]
+[node name="floor" type="CSGBox3D" parent="base"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
 size = Vector3(5, 0.2, 5)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="base/floor"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="base/floor/StaticBody3D"]
+shape = SubResource("BoxShape3D_vv16r")
+
+[node name="bounds" type="Area3D" parent="base"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="base/bounds"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00195074, 1.51002, 0.0106244)
+shape = SubResource("BoxShape3D_rbj3x")
+
+[node name="player_controller" type="Node3D" parent="."]
+script = ExtResource("6_fk0ol")
+
+[node name="Camera3D" type="Camera3D" parent="player_controller"]
+transform = Transform3D(-1, 6.18173e-08, -6.18172e-08, 0, 0.707107, 0.707107, 8.74228e-08, 0.707107, -0.707107, 0, 5, -5)
+fov = 60.0
