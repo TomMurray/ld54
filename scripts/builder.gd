@@ -16,15 +16,31 @@ func move_to(pos):
 	if not pos:
 		visible = false
 		return
-	visible = true
+	pos = pos as Vector3
+	
+	# Do a raycast straight down from above
+	var space_state = get_world_3d().direct_space_state
+	var from = pos + Vector3.UP * 500.0
+	var to = pos + Vector3.DOWN * 500.0
+	var query = PhysicsRayQueryParameters3D.create(from, to)
+	var result = space_state.intersect_ray(query)
+	var target_pos = null
+	if not result.is_empty():
+		target_pos = result.position + result.normal * 0.05
+	
+	if not target_pos:
+		visible = false
+		return
 	
 	# Round position to grid coordinates
-	pos = Vector3(
-		floorf(pos.x + 0.5),
-		floorf(pos.y + 0.5),
-		floorf(pos.z + 0.5)
+	target_pos = Vector3(
+		floorf(target_pos.x + 0.5),
+		floorf(target_pos.y + 0.5),
+		floorf(target_pos.z + 0.5)
 	)
-	position = pos as Vector3
+	position = target_pos as Vector3
+	print("Final position %s" % position)
+	visible = true
 
 # Feels ugly but...sure
 func _unhandled_input(event):
