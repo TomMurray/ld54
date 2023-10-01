@@ -1,8 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://bixwmifpxmo03"]
+[gd_scene load_steps=3 format=3 uid="uid://bixwmifpxmo03"]
 
 [ext_resource type="Script" path="res://scripts/builder.gd" id="1_5pl1m"]
+[ext_resource type="AudioStream" uid="uid://moddi27cm80n" path="res://resources/music/error.wav" id="2_rwdnm"]
 
 [node name="builder" type="Node3D"]
 script = ExtResource("1_5pl1m")
 
 [node name="display_anchor" type="Node3D" parent="."]
+
+[node name="str_error" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_rwdnm")

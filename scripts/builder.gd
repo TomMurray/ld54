@@ -5,6 +5,7 @@ extends Node3D
 ## be built next, and which building.
 ## This might also be responsible for actually placing the object (?)
 @onready var placement_point : Node3D = $display_anchor
+@onready var str_error : AudioStreamPlayer = $str_error
 var curr_constructible : Constructible = null
 var curr_inventory_index : int = -1
 
@@ -34,7 +35,7 @@ func try_build():
 		if curr_constructible.can_build():
 			build.emit(curr_inventory_index, position)
 		else:
-			print("Can't build there")
+			str_error.play()
 		
 func select_constructible(index: int, s : PackedScene):
 	if index == curr_inventory_index:
