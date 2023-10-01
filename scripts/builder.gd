@@ -10,7 +10,7 @@ extends Node3D
 @onready var placement_point : Node3D = $display_anchor
 var curr_constructible : Constructible = null
 
-const selected_constructible : PackedScene = preload("res://scenes/constructibles/house_small.tscn")
+const selected_constructible : PackedScene = preload("res://scenes/constructibles/apartment_block.tscn")
 
 
 func make_a_move(pos):

@@ -14,7 +14,7 @@ collision_object = NodePath("placement_offset/StaticBody3D")
 visual_element = NodePath("placement_offset/CSGBox3D")
 
 [node name="placement_offset" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 2, 0.5)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="placement_offset"]
 material_override = SubResource("StandardMaterial3D_g0ymm")

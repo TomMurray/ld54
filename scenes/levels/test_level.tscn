@@ -73,13 +73,13 @@ level_res = Array[ExtResource("2_imjbt")]([SubResource("Resource_yhi3t"), SubRes
 res_display = NodePath("../CanvasLayer/MarginContainer/PanelContainer/inventory_display")
 
 [node name="apartment_block" parent="level" instance=ExtResource("1_6wnr6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 1.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
 
 [node name="house_small" parent="level" instance=ExtResource("2_qea0p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
 
 [node name="school" parent="level" instance=ExtResource("3_aaft4")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1, 0, -1)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2, 0, -2)
 
 [node name="floor" type="CSGBox3D" parent="level"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
