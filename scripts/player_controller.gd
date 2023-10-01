@@ -46,6 +46,9 @@ func _physics_process(delta):
 	if Engine.is_editor_hint():
 		return
 	
+	if not builder:
+		return
+	
 	var mouse_pos = get_viewport().get_mouse_position()
 	var space_state = get_world_3d().direct_space_state
 	var query = PhysicsRayQueryParameters3D.create(cam.project_ray_origin(mouse_pos), cam.project_ray_normal(mouse_pos) * 1000.0)

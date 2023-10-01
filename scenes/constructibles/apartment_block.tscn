@@ -10,6 +10,7 @@ size = Vector3(2, 4, 2)
 
 [node name="apartment_block" type="Node3D" node_paths=PackedStringArray("collision_object", "visual_element")]
 script = ExtResource("1_64wqq")
+node_type = 2
 collision_object = NodePath("placement_offset/StaticBody3D")
 visual_element = NodePath("placement_offset/CSGBox3D")
 

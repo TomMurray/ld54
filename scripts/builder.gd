@@ -10,7 +10,7 @@ extends Node3D
 var curr_constructible : Constructible = null
 var curr_inventory_index : int = -1
 
-signal build(index : int, pos : Vector3)
+signal build(index : int, pos : Vector3, basis : Basis)
 
 func move_to(pos):
 	if not pos:
@@ -31,11 +31,17 @@ func _unhandled_input(event):
 	if event.is_action_pressed("build"):
 		try_build()
 
+func _input(event):
+	if event.is_action_pressed("rotate_obj_90_clockwise"):
+		placement_point.rotate(Vector3.UP, deg_to_rad(90))
+	elif event.is_action_pressed("rotate_obj_90_anticlockwise"):
+		placement_point.rotate(Vector3.UP, deg_to_rad(-90))
+
 func try_build():
 	if curr_inventory_index >= 0:
 		if curr_constructible.can_build():
 			str_build.play()
-			build.emit(curr_inventory_index, position)
+			build.emit(curr_inventory_index, position, placement_point.basis)
 		else:
 			str_error.play()
 		
@@ -46,6 +52,7 @@ func select_constructible(index: int, s : PackedScene):
 		placement_point.remove_child(curr_constructible)
 	curr_constructible = null
 	curr_inventory_index = index
+	placement_point.basis = Basis.IDENTITY
 	if index >= 0:
 		curr_constructible = s.instantiate() as Constructible
 		curr_constructible.make_candidate()

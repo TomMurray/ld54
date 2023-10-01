@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://dxwnjl3qqc8b" path="res://scenes/constructibles/school.tscn" id="3_aaft4"]
 [ext_resource type="Script" path="res://scripts/player_controller.gd" id="6_fk0ol"]
 [ext_resource type="PackedScene" uid="uid://bixwmifpxmo03" path="res://scenes/builder.tscn" id="7_tmddd"]
+[ext_resource type="Script" path="res://scripts/constructible.gd" id="8_5v8qq"]
 [ext_resource type="PackedScene" uid="uid://dhbg6kha8j7ca" path="res://scenes/inventory_display.tscn" id="8_qw07l"]
 
 [sub_resource type="Resource" id="Resource_yhi3t"]
@@ -62,11 +63,6 @@ volumetric_fog_emission = Color(1, 1, 1, 1)
 volumetric_fog_length = 29.58
 volumetric_fog_detail_spread = 4.75683
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_20env"]
-emission_enabled = true
-emission = Color(1, 1, 1, 1)
-emission_energy_multiplier = 9.22
-
 [node name="test_level" type="Node3D"]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
@@ -90,9 +86,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
 [node name="school" parent="level" instance=ExtResource("3_aaft4")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2, 0, -2)
 
-[node name="floor" type="CSGBox3D" parent="level"]
+[node name="floor" type="CSGBox3D" parent="level" node_paths=PackedStringArray("collision_object", "visual_element")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
 size = Vector3(5, 0.2, 5)
+script = ExtResource("8_5v8qq")
+collision_object = NodePath("StaticBody3D")
+visual_element = NodePath(".")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="level/floor"]
 
@@ -122,16 +121,6 @@ shadow_enabled = true
 shadow_blur = 2.951
 
 [node name="builder" parent="." instance=ExtResource("7_tmddd")]
-
-[node name="TestMarker" type="CSGSphere3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.10586, 0.678907, 0.499999)
-visible = false
-material_override = SubResource("StandardMaterial3D_20env")
-
-[node name="OmniLight3D" type="OmniLight3D" parent="TestMarker"]
-light_energy = 7.202
-shadow_enabled = true
-omni_range = 7.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

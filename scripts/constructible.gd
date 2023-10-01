@@ -1,6 +1,7 @@
 class_name Constructible
 extends Node3D
 
+@export_enum("Ground", "Home", "Apartments", "School") var node_type : int = 0
 @export var collision_object : CollisionObject3D
 @export var visual_element : GeometryInstance3D
 
