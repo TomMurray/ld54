@@ -18,6 +18,13 @@ func make_a_move(pos):
 		visible = false
 		return
 	visible = true
+	
+	# Round position to grid coordinates
+	pos = Vector3(
+		floorf(pos.x + 0.5),
+		floorf(pos.y + 0.5),
+		floorf(pos.z + 0.5)
+	)
 	position = pos as Vector3
 
 func try_build():

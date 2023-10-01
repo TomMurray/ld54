@@ -54,7 +54,7 @@ func _physics_process(delta):
 	var result = space_state.intersect_ray(query)
 	var target_pos = null
 	if not result.is_empty():
-		target_pos = result.position
+		target_pos = result.position + result.normal * 0.05
 	builder.make_a_move(target_pos)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
