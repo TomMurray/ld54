@@ -1,5 +1,6 @@
-[gd_scene load_steps=18 format=3 uid="uid://cp481581qrtel"]
+[gd_scene load_steps=19 format=3 uid="uid://cp481581qrtel"]
 
+[ext_resource type="AudioStream" uid="uid://pna6cepnh3r5" path="res://resources/music/main.wav" id="1_5m32k"]
 [ext_resource type="PackedScene" uid="uid://dmk4fy0npeb6m" path="res://scenes/constructibles/apartment_block.tscn" id="1_6wnr6"]
 [ext_resource type="Script" path="res://scripts/inventory.gd" id="1_dx15y"]
 [ext_resource type="Script" path="res://scripts/level.gd" id="1_mxfe0"]
@@ -67,6 +68,10 @@ emission = Color(1, 1, 1, 1)
 emission_energy_multiplier = 9.22
 
 [node name="test_level" type="Node3D"]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_5m32k")
+autoplay = true
 
 [node name="inventory" type="Node3D" parent="."]
 script = ExtResource("1_dx15y")
