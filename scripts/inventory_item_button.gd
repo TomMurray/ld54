@@ -12,6 +12,10 @@ func set_resource(r : LevelResourceDef):
 
 func set_item_count(count : int):
 	remaining_count.text = "%d left" % count
+	if count <= 0:
+		remaining_count.add_theme_color_override("font_color", Color.GREEN)
+	else:
+		remaining_count.remove_theme_color_override("font_color")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -19,6 +23,7 @@ func _ready():
 	photo_stage.set_scene(level_res.constructible)
 	photo_stage.texture_baked.connect(_texture_baked)
 	add_child(photo_stage)
+	set_item_count(level_res.available_count)
 	level_res = null
 
 func _texture_baked(image : Image):

@@ -149,5 +149,6 @@ layout_mode = 2
 inventory = NodePath("../../../../inventory")
 
 [connection signal="select_item" from="inventory" to="builder" method="select_constructible"]
+[connection signal="update_item_count" from="inventory" to="builder" method="_on_inventory_update_item_count"]
 [connection signal="build" from="builder" to="level" method="build_item"]
 [connection signal="item_selected" from="CanvasLayer/MarginContainer/PanelContainer/inventory_display" to="inventory" method="_on_inventory_display_item_selected"]

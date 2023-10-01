@@ -39,7 +39,8 @@ func try_build():
 func select_constructible(index: int, s : PackedScene):
 	if index == curr_inventory_index:
 		return
-	placement_point.remove_child(curr_constructible)
+	if curr_constructible:
+		placement_point.remove_child(curr_constructible)
 	curr_constructible = null
 	curr_inventory_index = index
 	if index >= 0:
@@ -49,3 +50,9 @@ func select_constructible(index: int, s : PackedScene):
 
 func _process(delta):
 	pass
+
+
+func _on_inventory_update_item_count(index, count):
+	if index == curr_inventory_index:
+		if count <= 0:
+			select_constructible(-1, null)
