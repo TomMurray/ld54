@@ -1,6 +1,10 @@
 class_name Constructible
 extends Node3D
 
+# - Need something which says 'this point must connect with ground' for example
+#   This is an immediate requirement, we don't want to allow building on top o
+#   other houses etc.
+
 @export_enum("Ground", "Home", "Apartments", "School") var node_type : int = 0
 @export var collision_object : CollisionObject3D
 @export var visual_element : GeometryInstance3D

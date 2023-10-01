@@ -39,7 +39,6 @@ func move_to(pos):
 		floorf(target_pos.z + 0.5)
 	)
 	position = target_pos as Vector3
-	print("Final position %s" % position)
 	visible = true
 
 # Feels ugly but...sure
@@ -76,7 +75,6 @@ func select_constructible(index: int, s : PackedScene):
 
 func _process(delta):
 	pass
-
 
 func _on_inventory_update_item_count(index, count):
 	if index == curr_inventory_index:
