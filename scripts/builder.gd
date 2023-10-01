@@ -6,6 +6,7 @@ extends Node3D
 ## This might also be responsible for actually placing the object (?)
 @onready var placement_point : Node3D = $display_anchor
 @onready var str_error : AudioStreamPlayer = $str_error
+@onready var str_build : AudioStreamPlayer3D = $str_build
 var curr_constructible : Constructible = null
 var curr_inventory_index : int = -1
 
@@ -33,6 +34,7 @@ func _unhandled_input(event):
 func try_build():
 	if curr_inventory_index >= 0:
 		if curr_constructible.can_build():
+			str_build.play()
 			build.emit(curr_inventory_index, position)
 		else:
 			str_error.play()

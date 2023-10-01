@@ -12,4 +12,4 @@ func build_item(inventory_index : int, pos : Vector3):
 		inst.position = pos
 	else:
 		print("Failed to build item at inventory index %d" % inventory_index)
-	
+
