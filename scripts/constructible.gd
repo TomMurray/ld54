@@ -34,3 +34,6 @@ func make_candidate():
 	collision_object.queue_free()
 	collision_object = area
 	
+func can_build():
+	return _bodies_overlapping.is_empty()
+	

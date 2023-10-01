@@ -33,8 +33,6 @@ func _input(event):
 	elif event.is_action("zoom_in"):
 		zoom += (event as InputEventMouseButton).factor * zoom_step
 		_on_zoom_changed()
-	elif event.is_action("build"):
-		builder.try_build()
 	elif event is InputEventMouseMotion:
 		var moved = (event as InputEventMouseMotion).relative
 		if Input.is_action_pressed("rotate_drag"):
@@ -55,7 +53,7 @@ func _physics_process(delta):
 	var target_pos = null
 	if not result.is_empty():
 		target_pos = result.position + result.normal * 0.05
-	builder.make_a_move(target_pos)
+	builder.move_to(target_pos)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

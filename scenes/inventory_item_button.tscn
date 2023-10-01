@@ -24,5 +24,3 @@ texture = SubResource("ImageTexture_q8a0u")
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
-
-[connection signal="button_up" from="." to="." method="_on_button_up"]

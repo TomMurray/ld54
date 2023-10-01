@@ -1,6 +1,7 @@
-[gd_scene load_steps=17 format=3 uid="uid://cp481581qrtel"]
+[gd_scene load_steps=18 format=3 uid="uid://cp481581qrtel"]
 
 [ext_resource type="PackedScene" uid="uid://dmk4fy0npeb6m" path="res://scenes/constructibles/apartment_block.tscn" id="1_6wnr6"]
+[ext_resource type="Script" path="res://scripts/inventory.gd" id="1_dx15y"]
 [ext_resource type="Script" path="res://scripts/level.gd" id="1_mxfe0"]
 [ext_resource type="Script" path="res://scripts/level_resource_def.gd" id="2_imjbt"]
 [ext_resource type="PackedScene" uid="uid://bdoi88vqtrout" path="res://scenes/constructibles/house_small.tscn" id="2_qea0p"]
@@ -67,10 +68,13 @@ emission_energy_multiplier = 9.22
 
 [node name="test_level" type="Node3D"]
 
-[node name="level" type="Node3D" parent="." node_paths=PackedStringArray("res_display")]
+[node name="inventory" type="Node3D" parent="."]
+script = ExtResource("1_dx15y")
+contents = Array[ExtResource("2_imjbt")]([SubResource("Resource_yhi3t"), SubResource("Resource_c2uhj"), SubResource("Resource_o5dmf")])
+
+[node name="level" type="Node3D" parent="." node_paths=PackedStringArray("inventory")]
 script = ExtResource("1_mxfe0")
-level_res = Array[ExtResource("2_imjbt")]([SubResource("Resource_yhi3t"), SubResource("Resource_c2uhj"), SubResource("Resource_o5dmf")])
-res_display = NodePath("../CanvasLayer/MarginContainer/PanelContainer/inventory_display")
+inventory = NodePath("../inventory")
 
 [node name="apartment_block" parent="level" instance=ExtResource("1_6wnr6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
@@ -112,8 +116,7 @@ light_volumetric_fog_energy = 1.26
 shadow_enabled = true
 shadow_blur = 2.951
 
-[node name="builder" parent="." node_paths=PackedStringArray("level") instance=ExtResource("7_tmddd")]
-level = NodePath("../level")
+[node name="builder" parent="." instance=ExtResource("7_tmddd")]
 
 [node name="TestMarker" type="CSGSphere3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.10586, 0.678907, 0.499999)
@@ -141,5 +144,10 @@ theme_override_constants/margin_right = 200
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/MarginContainer"]
 layout_mode = 2
 
-[node name="inventory_display" parent="CanvasLayer/MarginContainer/PanelContainer" instance=ExtResource("8_qw07l")]
+[node name="inventory_display" parent="CanvasLayer/MarginContainer/PanelContainer" node_paths=PackedStringArray("inventory") instance=ExtResource("8_qw07l")]
 layout_mode = 2
+inventory = NodePath("../../../../inventory")
+
+[connection signal="select_item" from="inventory" to="builder" method="select_constructible"]
+[connection signal="build" from="builder" to="level" method="build_item"]
+[connection signal="item_selected" from="CanvasLayer/MarginContainer/PanelContainer/inventory_display" to="inventory" method="_on_inventory_display_item_selected"]
