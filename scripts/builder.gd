@@ -24,10 +24,10 @@ func move_to(pos):
 	)
 	position = pos as Vector3
 
+# Feels ugly but...sure
 func _unhandled_input(event):
-	if event is InputEventMouseButton:
-		if (event as InputEventMouseButton).is_pressed():
-			try_build()
+	if event.is_action_pressed("build"):
+		try_build()
 
 func try_build():
 	if curr_inventory_index >= 0:
