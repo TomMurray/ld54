@@ -1,7 +1,6 @@
 class_name Level
 extends Node3D
 
-@export var bounds : Area3D
 @export var level_res : Array[LevelResourceDef]
 @export var res_display : InventoryDisplay
 

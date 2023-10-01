@@ -8,9 +8,10 @@ albedo_color = Color(0.360784, 0.564706, 0.521569, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_y2j1g"]
 size = Vector3(2, 4, 2)
 
-[node name="apartment_block" type="Node3D" node_paths=PackedStringArray("collision_object")]
+[node name="apartment_block" type="Node3D" node_paths=PackedStringArray("collision_object", "visual_element")]
 script = ExtResource("1_64wqq")
 collision_object = NodePath("placement_offset/StaticBody3D")
+visual_element = NodePath("placement_offset/CSGBox3D")
 
 [node name="placement_offset" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)

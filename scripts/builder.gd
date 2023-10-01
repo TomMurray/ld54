@@ -8,8 +8,10 @@ extends Node3D
 # Take a reference to a level
 @export var level : Level
 @onready var placement_point : Node3D = $display_anchor
+var curr_constructible : Constructible = null
 
 const selected_constructible : PackedScene = preload("res://scenes/constructibles/house_small.tscn")
+
 
 func make_a_move(pos):
 	if not pos:
@@ -21,20 +23,11 @@ func make_a_move(pos):
 func try_build():
 	print("try_build")
 	
-func _disable_collision_objects(node : Node):
-	var body = node as CollisionObject3D
-	if body:
-		body.collision_layer = 0
-		body.collision_mask = 0
-	else:
-		for child in node.get_children():
-			_disable_collision_objects(child)
-	
 
 func _ready():
-	var constructible = selected_constructible.instantiate() as Constructible
-	constructible.collision_layer = 0
-	placement_point.add_child(constructible)
+	curr_constructible = selected_constructible.instantiate() as Constructible
+	curr_constructible.make_candidate()
+	placement_point.add_child(curr_constructible)
 
 func _process(delta):
 	pass
