@@ -10,16 +10,14 @@ albedo_color = Color(0.301961, 0.12549, 0.054902, 1)
 [node name="house_small" type="Node3D" node_paths=PackedStringArray("collision_object", "visual_element")]
 script = ExtResource("1_xlnmv")
 node_type = 1
-collision_object = NodePath("placement_offset/StaticBody3D")
-visual_element = NodePath("placement_offset/CSGBox3D")
+collision_object = NodePath("StaticBody3D")
+visual_element = NodePath("CSGBox3D")
+grid_desc = Array[Vector3i]([Vector3i(0, 0, 0)])
 
-[node name="placement_offset" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-
-[node name="CSGBox3D" type="CSGBox3D" parent="placement_offset"]
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
 material_override = SubResource("StandardMaterial3D_kmftf")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="placement_offset"]
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="placement_offset/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 shape = SubResource("BoxShape3D_pym8f")

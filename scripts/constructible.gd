@@ -8,6 +8,7 @@ extends Node3D
 @export_enum("Ground", "Home", "Apartments", "School") var node_type : int = 0
 @export var collision_object : CollisionObject3D
 @export var visual_element : GeometryInstance3D
+@export var grid_desc : Array[Vector3i]
 
 var _unplaceable_mat = preload("res://resources/materials/unplaceable.tres") as Material
 @onready var _orig_mat = visual_element.material_override 

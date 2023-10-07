@@ -2,6 +2,7 @@ class_name Level
 extends Node3D
 
 @export var inventory : Inventory
+var grid : Grid
 
 func build_item(inventory_index : int, pos : Vector3, basis : Basis):
 	var new_item_scene = inventory.use_item(inventory_index)
